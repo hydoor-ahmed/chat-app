@@ -2,11 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-.login_BG {
+@layer {
+  @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap");
+}
+* {
+  font-family: "Cairo", serif !important;
+}
+
+html {
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(213 18% 20% / 1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(214, 20%, 30%);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(213, 17%, 28%);
+}
+
+.main_BG {
   background-image: linear-gradient(#00000028, #00000028), url(/bg.png);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
+  height: 100vh;
 }
-
