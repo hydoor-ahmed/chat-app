@@ -1,34 +1,46 @@
-const Message = () => {
-  return (
-    <div>
-      <div className="chat chat-start"> {/* Reciver */}
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <img src="https://avatar.iran.liara.run/public/girl" />
-          </div>
-        </div>
-        <div className="chat-header">
-          {/* Dajan Jan */}
-          <time className="text-xs opacity-50 ml-1">12:45</time>
-        </div>
-        <div className="chat-bubble">You were the Chosen One!</div>
-        {/* <div className="chat-footer opacity-50">Delivered</div> */}
-      </div>
+import { useAuthContext } from "../../context/AuthContext";
+import useConversation from "../../zustan/useConversation";
 
-      <div className="chat chat-end"> {/* Sender */}
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <img src="https://avatar.iran.liara.run/public/boy" />
-          </div>
+const Message = ({ message }) => {
+  const { authUser } = useAuthContext();
+  const { selectedConversation } = useConversation();
+
+  const text =
+    typeof message.message === "object"
+      ? message.message.message
+      : message.message;
+
+  const formattedTime = new Date(
+    typeof message.message === "object"
+      ? message.message.createdAt
+      : message.createdAt
+  ).toLocaleTimeString("us-EN", { hour: "numeric", minute: "numeric" });
+
+  const fromMe =
+    typeof message.message === "object"
+      ? message.message.senderId
+      : message.senderId === authUser._id;
+  const chatClassName = fromMe ? "chat-end" : "chat-start";
+  const profilePic = fromMe
+    ? authUser.profilePic
+    : selectedConversation?.profilePic;
+
+  return (
+    <div className={`chat ${chatClassName}`}>
+      <div className="chat-image avatar">
+        <div className="w-10 rounded-full">
+          <img alt="Profile Pic" src={profilePic} />
         </div>
-        <div className="chat-header">
-          <time className="text-xs opacity-50">12:46</time>
-        </div>
-        <div className="chat-bubble">I hate you!</div>
-        {/* <div className="chat-footer opacity-50">Seen at 12:46</div> */}
+      </div>
+      <div
+        className={`chat-bubble text-white pb-2 text-sm md:text-base max-w-[345px]`}
+      >
+        <p className="w-full text-wrap">{text}</p>
+      </div>
+      <div className="chat-footer opacity-50 text-xs flex gap-1 items-center text-wrap">
+        {formattedTime}
       </div>
     </div>
   );
 };
-
 export default Message;
