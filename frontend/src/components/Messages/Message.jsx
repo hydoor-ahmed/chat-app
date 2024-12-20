@@ -1,3 +1,4 @@
+import { extractTime } from "../../utils/Time";
 import { useAuthContext } from "../../context/AuthContext";
 import useConversation from "../../zustan/useConversation";
 
@@ -5,16 +6,18 @@ const Message = ({ message }) => {
   const { authUser } = useAuthContext();
   const { selectedConversation } = useConversation();
 
+  const shakeClass = message.shouldShake ? "shake" : "";
+
+  const formattedTime = extractTime(
+    typeof message.message === "object"
+      ? message.message.createdAt
+      : message.createdAt
+  );
+
   const text =
     typeof message.message === "object"
       ? message.message.message
       : message.message;
-
-  const formattedTime = new Date(
-    typeof message.message === "object"
-      ? message.message.createdAt
-      : message.createdAt
-  ).toLocaleTimeString("us-EN", { hour: "numeric", minute: "numeric" });
 
   const fromMe =
     typeof message.message === "object"
@@ -33,7 +36,7 @@ const Message = ({ message }) => {
         </div>
       </div>
       <div
-        className={`chat-bubble text-white pb-2 text-sm md:text-base max-w-[345px]`}
+        className={`chat-bubble text-white pb-2 text-sm md:text-base max-w-[345px] ${shakeClass}`}
       >
         <p className="w-full text-wrap">{text}</p>
       </div>

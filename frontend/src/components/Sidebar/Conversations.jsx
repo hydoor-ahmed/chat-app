@@ -5,7 +5,7 @@ const Conversations = () => {
   const { loading, conversations } = useGetConversations();
 
   return ( // sm:h-[280px]
-    <div className="border-r border-slate-400 overflow-y-scroll sm:min-w-[250px] md:w-auto h-[80%] md:h-[380px] pr-2">
+    <div className="overflow-y-scroll sm:min-w-[250px] md:w-auto h-[75%] pr-2">
 
       {loading ? (
         <div className="flex items-center justify-center">

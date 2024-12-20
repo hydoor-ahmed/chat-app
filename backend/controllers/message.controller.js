@@ -1,5 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
+import { getReceiverSocketId } from "../socket/socket.js";
+import { io } from "../socket/socket.js";
 
 export const sendMessageCont = async (req, res) => {
   try {
@@ -26,6 +28,11 @@ export const sendMessageCont = async (req, res) => {
     if (newMessage) conversation.messages.push(newMessage._id);
 
     // * SOCET IO FUNCTIONALITY WILL BE HERE
+    const rceiverSocketId = getReceiverSocketId(receiverId);
+    if (rceiverSocketId) {
+      io.to(rceiverSocketId).emit("newMessage", newMessage);
+      console.log(newMessage)
+    }
 
     await Promise.all([conversation.save(), newMessage.save()]); // ? This will run in exact time
 

@@ -13,6 +13,10 @@ const messageSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   }
 }, {timestamps: true});
 
