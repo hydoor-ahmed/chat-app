@@ -32,6 +32,10 @@ app.use("/api/users", usersRoute);
 //   res.sendFile(path.join(__dirname, "/frontend/dist/index.html"));
 // });
 
+app.get("/", (req, res) => {
+  res.send("Server is running");
+})
+
 server.listen(PORT, () => {
   connectToMongoDB();
   console.log(`\n\t\t[!] Server Is Running On: http://localhost:${PORT}\n`);
